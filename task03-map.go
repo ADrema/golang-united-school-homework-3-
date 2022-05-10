@@ -5,23 +5,37 @@ import (
 )
 
 func sortMapValues(input map[int]string) (result []string) {
-	sort.Sort(SortedByKeys(input))
-	for _, v := range input {
-		result = append(result, v)
+	// transfer map into custom type
+	inputPair := make(PairList, len(input))
+	i := 0
+	for k, v := range input {
+		inputPair[i] = Pair{k, v}
+		i++
+	}
+	// sort it
+	sort.Sort(inputPair)
+
+	for _, v := range inputPair {
+		result = append(result, v.Value)
 	}
 	return result
 }
 
-type SortedByKeys map[int]string
-
-func (input SortedByKeys) Len() int {
-	return len(input)
+type Pair struct {
+	Key   int
+	Value string
 }
 
-func (input SortedByKeys) Less(i, j int) bool {
-	return i < j
+type PairList []Pair
+
+func (inputPair PairList) Len() int {
+	return len(inputPair)
 }
 
-func (input SortedByKeys) Swap(i, j int) {
-	input[i], input[j] = input[j], input[i]
+func (inputPair PairList) Less(i, j int) bool {
+	return inputPair[i].Key < inputPair[j].Key
+}
+
+func (inputPair PairList) Swap(i, j int) {
+	inputPair[i], inputPair[j] = inputPair[j], inputPair[i]
 }
