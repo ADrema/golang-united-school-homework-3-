@@ -3,7 +3,7 @@
 ## How to:
 
 - Clone the repo
-- run `go mod init homework`
+- run `go mod init main`
 - run `go mod tidy`
 - Edit task files
   - it contains correct package name
